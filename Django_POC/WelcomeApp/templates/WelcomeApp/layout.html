@@ -14,15 +14,15 @@
     </div>
     <div class="leftBar">
         <p>
-            <form action="">
+            <form action="" method = "POST">
                 {% csrf_token %}
                 {{ searchForm }}
             </form>
         </p>
-        <p>Image Library</p>
-        <p>Video Library</p>
-        <p>Notes</p>
-        <p>Would you like to contribute something? Please click <a href="{% url 'contribute' %}"> here</a></p>
+        <p> <a href=" {% url 'findPage' 'image' %}">Image Library</a> </p>
+        <p> <a href=" {% url 'findPage' 'video' %}">Video Library</a></p>
+        <p> <a href=" {% url 'findPage' 'notes' %}">Notes </a></p>
+        
     </div>
     {% block body %}
     {% endblock %}
