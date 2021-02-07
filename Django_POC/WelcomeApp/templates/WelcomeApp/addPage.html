@@ -1,0 +1,17 @@
+{% extends "WelcomeApp/layout.html"%}
+
+{% block title %}
+    <title>Contribute</title>
+{% endblock %}
+
+{% block body %}
+
+    <div class="mainBody">
+        <form action="" method = "POST">
+            {{ NewResourceForm.as_p }}
+            {% csrf_token %}
+            <input type="submit"/>
+        </form>
+    </div>
+
+{% endblock %}
