@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django import forms
 
 import markdown2
-import resources
+
 
 import os
 
