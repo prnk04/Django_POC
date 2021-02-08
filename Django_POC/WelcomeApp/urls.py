@@ -7,3 +7,4 @@ urlpatterns = [
     path('<str:queryName>/', views.findPage, name = "findPage")
     
 ]
+// Test
