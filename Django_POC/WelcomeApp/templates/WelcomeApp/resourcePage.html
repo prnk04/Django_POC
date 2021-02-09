@@ -7,7 +7,37 @@
 {% block body %}
    
     <div class="mainBody">
-        Hi! Here is the {{resourceName}} resource that you had requested
+        Hi! We have Found {{resCount}} {{resourceName}} resources that matched your search
+        {% if resCount == 0 %}
+        <div>You can look for other resources <a href="{% url 'homePage' %}">here</a></div>
+        {% else %}
+            <table style="border: solid 2px black; border-collapse: collapse;">
+                <tr>
+                    <th style="border: solid 2px black;">Resource</th>
+                    <th style="border: solid 2px black;">Author</th>
+                    <th style="border: solid 2px black;">Date of Submission</th>
+                    <th style="border: solid 2px black;">Link to {{resourceName}}</th>
+                    <th style="border: solid 2px black;">{{resourceName}}</th>
+                </tr>
+                {% for r in resource %}
+                <tr>
+                    <td style="border: solid 2px black;">{{ r.resource_name }}</td>
+                    <td style="border: solid 2px black;">{{ r.authors }}</td>
+                    <td style="border: solid 2px black;">{{ r.dateSubmitted }}</td>
+                    <td style="border: solid 2px black;">
+                        {% if r.link != '' %}
+                            <a href={{ r.link }}>Click Here</a>
+                        {% endif %}
+                    </td>
+                    <td style="border: solid 2px black;">
+                        {% if r.resourceFile != '' %}
+                            <img src={{ r.resourceFile }}>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
     </div>
 
 {% endblock %}

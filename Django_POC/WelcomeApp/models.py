@@ -1,42 +1,36 @@
 from django.db import models
+# from PIL import *
 
 # Create your models here.
 
-class KeywordsMapping(models.Model):
-    key_id = models.IntegerField()
-    keyword = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"{self.key_id} : {self.keyword}"
-
-
-class AuthorsTable(models.Model):
-    author_id = models.IntegerField(unique=True)
-    author_name = models.CharField(max_length=64)
-
-    def __str__(self):
-        return f"{self.author_id} : {self.author_name}"
-
-class ResourceIdentification(models.Model):
-    resource_id = models.IntegerField()
-    resource_name = models.CharField(max_length = 400)
-
-    def __str__(self):
-        return f"{self.resource_id} : {self.resource_name}"
-
-class Contributions(models.Model):
-    author_id = models.ForeignKey(AuthorsTable, on_delete= models.CASCADE, related_name= "Contribution")
-    resource_id = models.ForeignKey(ResourceIdentification, on_delete= models.CASCADE, related_name= "ContributedResource")
-
-    def __str__(self):
-        return f"{self.author_id} : {self.resource_id}"
-
 class ImgResource(models.Model):
-    resource_id = models.ForeignKey(ResourceIdentification, on_delete= models.CASCADE, related_name= "ContributedResources")
-    key_id = models.ForeignKey(KeywordsMapping, on_delete= models.PROTECT, related_name= "keywords")
+    resource_name = models.CharField(max_length=200)
+    authors = models.CharField(max_length=200)
+    keywords = models.CharField(max_length=500)
     dateSubmitted = models.DateField(auto_now_add=True)
-    link = models.URLField()
-    resourceFile = models.BinaryField()
+    link = models.URLField(blank=True)
+    resourceFile = models.ImageField(blank=True)
+
+    def __str__(self):
+        return f"{self.resource_name} is contributed by {self.authors} on {self.dateSubmitted} See here {self.link} and {self.resourceFile}"
+
+    class Meta:
+        constraints = [
+        models.UniqueConstraint(fields=['resource_name', 'authors'], name='unique_article'),
+        models.CheckConstraint(
+                name="resourcePresent",
+                check=(
+                    ~models.Q( 
+                        resourceFile__exact = '',
+                        link__exact = ''
+                    )
+                ),
+            )
+
+        ]
+        #  UniqueConstraint(fields=['resource_name', 'authors'], name='unique_article')
+
+    
 
 
 # admin creds: prtkprnk35 143@Prat
