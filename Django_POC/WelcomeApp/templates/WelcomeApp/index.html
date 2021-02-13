@@ -5,9 +5,24 @@
 {% endblock %}
 
 {% block body %}
-
+    {% if queryResult|length > 0 %}
+    <ul>
+        {% for key, value in queryResult.items  %}
+            <li style="font-size: 24px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{ key }}</li>
+            <ul>
+                {% for v in value %}
+                <li >
+                    {{v.resource_name}}
+                    <br>{{v.dateSubmitted}} : {{v.authors}} <a href= {{ v.link }}> Click Here</a> </br> 
+                </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+        
+    {% else %}
     <div class="mainBody">
         Welcome! This is a website created to help you provide resources
     </div>
-
+    {% endif %}
 {% endblock %}

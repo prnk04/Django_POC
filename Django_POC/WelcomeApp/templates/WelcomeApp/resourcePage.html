@@ -30,8 +30,19 @@
                         {% endif %}
                     </td>
                     <td style="border: solid 2px black;">
-                        {% if r.resourceFile != '' %}
-                            <img src={{ r.resourceFile }}>
+                        {% if r.resourceFile.url != '' %}
+                            {% if 'image' in r.resourceFile.url %}
+                                <img src={{ r.resourceFile.url }} style="width: 300; height: 200;">
+                            {% endif %}
+
+                            {% if 'video' in r.resourceFile.url %}
+                                <video controls src={{ r.resourceFile.url }} style="width: 300; height: 200;"></video>
+                            {% endif %}
+
+                            {% if 'article' in r.resourceFile.url %}
+                                <a href={{ r.resourceFile.url }}>{{ r.resourceFile|cut:"articleResources/" }}</a>
+                            {% endif %}
+                            
                         {% endif %}
                     </td>
                 </tr>
